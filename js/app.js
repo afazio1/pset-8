@@ -26,6 +26,9 @@ let win;
 ///////////////////// CACHED ELEMENT REFERENCES /////////////////////
 const squares = Array.from(document.querySelectorAll("#board div"));
 const message = document.querySelector("h2");
+const easySpan = document.getElementById("easy");
+const hardSpan = document.getElementById("hard");
+
 
 
 
@@ -36,6 +39,8 @@ const message = document.querySelector("h2");
 window.onload = init;
 document.getElementById("board").onclick = takeTurn;
 document.getElementById("reset-button").onclick = init;
+document.getElementById("easy").onclick = easy;
+document.getElementById("hard").onclick = hard;
 
 
 
@@ -49,6 +54,7 @@ function init() {
   ];
   turn = "X";
   win = null;
+
 
   render();   // we'll write this later
 }
@@ -92,4 +98,14 @@ function getWinner() {
   });
 
   return winner ? winner : board.includes("") ? null : "T";
+}
+function easy(e) {
+	e.target.className = "easy";
+	hardSpan.className = "";
+
+}
+
+function hard(e) {
+	e.target.className = "hard";
+	easySpan.className = "";
 }

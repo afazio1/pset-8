@@ -111,3 +111,16 @@ h2 {
   color: white;
   cursor: pointer;
 }
+span {
+  padding: 5px;
+  font-size: 20px;
+}
+
+.easy {
+  background-color: lime;
+  
+}
+.hard {
+  background-color: red;
+
+}
