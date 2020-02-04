@@ -17,7 +17,9 @@ const winningConditions = [
 let board;
 let turn;
 let win;
-
+let gamemode;
+let max;
+let go;
 
 
 
@@ -53,10 +55,11 @@ function init() {
     "", "", ""
   ];
   turn = "X";
+  max = 0;
   win = null;
+  go = 0;
 
-
-  render();   // we'll write this later
+  render(); 
 }
 
 function render() {
@@ -76,8 +79,30 @@ function takeTurn(e) {
 
     if (board[index] === "") {
       board[index] = turn;
-      turn = turn === "X" ? "O" : "X";
+      console.log(turn);
+      //turn = turn === "X" ? "O" : "X";
+      go++;
       win = getWinner();
+      //create an animation when an X or O is placed 
+      if (gamemode === "easy" && go !== 5) {
+        console.log("easy");
+        max = 9;
+        let flag = false;
+        while (flag === false) {
+          randomNum = Math.floor(Math.random() * Math.floor(max));
+          if (board[randomNum] === "") {
+          board[randomNum] = "O";
+          flag = true;
+          win = getWinner();
+        }
+      }  
+    }
+      else if (gamemode === "hard") {
+        //develop algorithm
+        console.log("hard");
+      }
+      
+    
 
       render();
     }
@@ -102,10 +127,14 @@ function getWinner() {
 function easy(e) {
 	e.target.className = "easy";
 	hardSpan.className = "";
+  gamemode = "easy";
+  init();
 
 }
 
 function hard(e) {
 	e.target.className = "hard";
 	easySpan.className = "";
+  gamemode = "hard";
+  init();
 }
