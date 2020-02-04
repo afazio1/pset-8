@@ -58,6 +58,7 @@ function init() {
   max = 0;
   win = null;
   go = 0;
+  gamemode = "easy";
 
   render(); 
 }
@@ -79,12 +80,14 @@ function takeTurn(e) {
 
     if (board[index] === "") {
       board[index] = turn;
-      console.log(turn);
-      //turn = turn === "X" ? "O" : "X";
+      e.target.className = "animation";
+      //need to figure out how to reset animation
+
       go++;
       win = getWinner();
+      console.log(win);
       //create an animation when an X or O is placed 
-      if (gamemode === "easy" && go !== 5) {
+      if (gamemode === "easy" && go !== 5 && win === null) {
         console.log("easy");
         max = 9;
         let flag = false;
@@ -127,7 +130,7 @@ function getWinner() {
 function easy(e) {
 	e.target.className = "easy";
 	hardSpan.className = "";
-  gamemode = "easy";
+  //gamemode = "easy";
   init();
 
 }
