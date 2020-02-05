@@ -77,22 +77,37 @@ h2 {
   width: 150px;
 }
 
-.animation {
+.x-animation {
   border: 1px solid rgba(0, 0, 0, 0.75);
   font-size: 96px;
   height: 150px;
   line-height: 150px;
   user-select: none;
   width: 150px;
-  animation-name: test;
-  animation-duration: 2s;
+  animation-name: x;
+  animation-duration: 0.5s;
 }
-
-@keyframes test {
+.o-animation {
+  border: 1px solid rgba(0, 0, 0, 0.75);
+  font-size: 96px;
+  height: 150px;
+  line-height: 150px;
+  user-select: none;
+  width: 150px;
+  animation-name: o;
+  animation-duration: 0.5s;
+}
+@keyframes x {
   0%  {font-size: 0px;}
   75% {font-size: 100px;}
   100%{font-size: 96px;}
 
+}
+@keyframes o {
+  0%  {font-size: 0px;}
+  75% {font-size: 0px;}
+  90% {font-size: 100px;}
+  100%{font-size: 96px;}
 }
 /*
  * And we give it a little flare when the user mouses over a square.
