@@ -104,6 +104,9 @@ function takeTurn(e) {
       else if (gamemode === "hard") {
         //develop algorithm
         console.log("hard");
+        miniMax();
+
+
       }
       
     
@@ -149,3 +152,46 @@ function hard(e) {
 function reset() {
   round++;
 }
+
+function miniMax() {
+  let flag = false;
+  let bestMoves = [];
+  let possibleIndexes = [];
+  let best;
+
+    for (let i = 0; i < squares.length; i++) {
+
+      if (board[i] === "X") {
+        //pick a spot touching the index
+        if (i === 0) {
+          possibleIndexes.push(1, 3, 4);
+        }
+        else if (i === 1) {
+          possibleIndexes.push(0, 2, 3, 4, 5);
+        }
+        else if (i === 2) {
+          possibleIndexes.push(1, 4, 5);
+        }
+        else if (i === 3) {
+          possibleIndexes.push(0, 1, 4, 6, 7);
+        }
+        else if (i === 4) {
+          possibleIndexes.push(0, 1, 2, 3, 5, 6, 7, 8);
+        }
+        else if (i === 5) {
+          possibleIndexes.push(2, 4, 7, 8);
+        }
+        else if (i === 6) {
+          possibleIndexes.push(3, 4, 7);
+        }
+        else if (i === 7) {
+          possibleIndexes.push(3, 4, 5, 6, 8);
+        }
+        else if (i === 8) {
+          possibleIndexes.push(4, 5, 7);
+        }
+        
+
+      }
+    }
+  }
