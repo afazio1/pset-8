@@ -84,7 +84,7 @@ function takeTurn(e) {
     if (board[index] === "") {
       board[index] = turn;
       e.target.className = "x-animation";
-
+      reset();
       go++;
       win = getWinner();
 
