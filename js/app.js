@@ -101,16 +101,63 @@ function takeTurn(e) {
         }
       }  
     }
-      else if (gamemode === "hard") {
+      else if (gamemode === "hard" && go !== 5 && win === null) {
         //develop algorithm
         console.log("hard");
-        miniMax();
+        let flag = false;
+        let randomCorner = null;
+        //if the player hasn't gone in a corner, go in a corner
+        if ((index != 0 && index != 2 && index != 6 && index != 8) && round === 1){
+          
+          while (randomCorner === null) {
+            randomCorner = Math.floor(Math.random() * Math.floor(5))
+            switch (randomCorner) {
+              case 1:
+                randomCorner = 0;
+                break;
+              case 2:
+                randomCorner = 2;
+                break;
+              case 3:
+                randomCorner = 6;
+                break;
+              case 4:
+              randomCorner = 8;
+              break;
+            }
+          }
 
-
+          board[randomCorner] = "O";
+          squares[randomCorner].className = "o-animation";
+          win = getWinner();
+          console.log(randomCorner);
+        }
+        //if the player goes in a corner, then go in the middle
+        else if ((index === 0 || index === 2 || index === 6 || index === 8 || index === 4) && round === 1) {
+          board[4] = "O";
+          squares[4].className = "o-animation";
+        }
+        else if (round === 2) {
+          if (randomCorner === 0 && board[8] === "") {
+            board[8] = "O";
+            squares[8].className = "o-animation";
+          }
+          else if (randomCorner === 2 && board[6] === "") {
+            board[6] = "O";
+            squares[6].className = "o-animation";
+          }
+          else if (randomCorner === 8 && board[0] === "") {
+            board[0] = "O";
+            squares[0].className = "o-animation";
+          }
+          else if (randomCorner === 6 && board[2] === "") {
+            board[2] = "O";
+            squares[2].className = "o-animation";
+          }
+        }
+        round++;
       }
       
-    
-
       render();
     }
   }
@@ -153,45 +200,3 @@ function reset() {
   round++;
 }
 
-function miniMax() {
-  let flag = false;
-  let bestMoves = [];
-  let possibleIndexes = [];
-  let best;
-
-    for (let i = 0; i < squares.length; i++) {
-
-      if (board[i] === "X") {
-        //pick a spot touching the index
-        if (i === 0) {
-          possibleIndexes.push(1, 3, 4);
-        }
-        else if (i === 1) {
-          possibleIndexes.push(0, 2, 3, 4, 5);
-        }
-        else if (i === 2) {
-          possibleIndexes.push(1, 4, 5);
-        }
-        else if (i === 3) {
-          possibleIndexes.push(0, 1, 4, 6, 7);
-        }
-        else if (i === 4) {
-          possibleIndexes.push(0, 1, 2, 3, 5, 6, 7, 8);
-        }
-        else if (i === 5) {
-          possibleIndexes.push(2, 4, 7, 8);
-        }
-        else if (i === 6) {
-          possibleIndexes.push(3, 4, 7);
-        }
-        else if (i === 7) {
-          possibleIndexes.push(3, 4, 5, 6, 8);
-        }
-        else if (i === 8) {
-          possibleIndexes.push(4, 5, 7);
-        }
-        
-
-      }
-    }
-  }
