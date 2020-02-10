@@ -219,6 +219,7 @@ function preventWin() {
       }
 }
 }
+//if all the corners are free
 if (didSomething === false && (board[0] === "" || board[2] === "" || board[6] === "" || board[8] === "") && round === 2) {
 
   didSomething = false;
@@ -268,7 +269,7 @@ if (didSomething === false && (board[0] === "" || board[2] === "" || board[6] ==
   }
   //go in a corner
   else {
-    while (randomCorner1 === null || valid === false) {
+    while (valid === false) {
     randomCorner1 = Math.floor(Math.random() * Math.floor(5))
     switch (randomCorner1) {
       case 1:
