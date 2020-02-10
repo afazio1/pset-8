@@ -30,6 +30,13 @@ h2 {
   font-weight: lighter;
   margin: 2%;
 }
+h3 {
+  font-size: 20px;
+  font-weight: lighter;
+  font-style: italic;
+  margin-top: 20px;
+  margin-bottom: 0;
+}
 
 /*
  * The container is a flex-box, which is a powerful layout tool. It grows
@@ -163,4 +170,7 @@ span {
   line-height: 150px;
   user-select: none;
   width: 150px;
+}
+.more-hidden {
+  display: none;
 }

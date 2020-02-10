@@ -20,14 +20,14 @@ let gamemode;
 let max;
 let go;
 let flag1 = false;
-let round = 0;
+let round;
 
 ///////////////////// CACHED ELEMENT REFERENCES /////////////////////
 const squares = Array.from(document.querySelectorAll("#board div"));
 const message = document.querySelector("h2");
 const easySpan = document.getElementById("easy");
 const hardSpan = document.getElementById("hard");
-
+const hardText = document.querySelector("h3");
 
 ///////////////////// EVENT LISTENERS ///////////////////////////////
 
@@ -49,6 +49,8 @@ function init(e) {
   max = 0;
   win = null;
   go = 0;
+  round = 1;
+  randomCorner = null;
   if (gamemode !== "hard") {
     gamemode = "easy";
   }
@@ -87,7 +89,7 @@ function takeTurn(e) {
       reset();
       go++;
       win = getWinner();
-
+      render();
       if (gamemode === "easy" && go !== 5 && win === null) {
         max = 9;
         let flag = false;
@@ -99,15 +101,16 @@ function takeTurn(e) {
           flag = true;
           win = getWinner();
         }
-      }  
+      }
+      render();  
     }
       else if (gamemode === "hard" && go !== 5 && win === null) {
         //develop algorithm
         console.log("hard");
         let flag = false;
-        let randomCorner = null;
+        console.log(round);
         //if the player hasn't gone in a corner, go in a corner
-        if ((index != 0 && index != 2 && index != 6 && index != 8) && round === 1){
+        if ((index != 0 && index != 2 && index != 6 && index != 8) && round === 2){
           
           while (randomCorner === null) {
             randomCorner = Math.floor(Math.random() * Math.floor(5))
@@ -130,39 +133,36 @@ function takeTurn(e) {
           board[randomCorner] = "O";
           squares[randomCorner].className = "o-animation";
           win = getWinner();
-          console.log(randomCorner);
+          round++;
         }
         //if the player goes in a corner, then go in the middle
-        else if ((index === 0 || index === 2 || index === 6 || index === 8 || index === 4) && round === 1) {
+        else if ((index === 0 || index === 2 || index === 6 || index === 8) && round === 2) {
+          console.log(round);
           board[4] = "O";
           squares[4].className = "o-animation";
+          round++;
         }
-        else if (round === 2) {
-          if (randomCorner === 0 && board[8] === "") {
-            board[8] = "O";
-            squares[8].className = "o-animation";
+        //if the player is about to win on the second go, then block them
+        if (round === 4) {
+          let didSomething = false;
+          preventWin();
+          getWinner();
+          render();
+        
+            //if player did not place 2nd X in a winning position, then go to a side middle spot
+            
           }
-          else if (randomCorner === 2 && board[6] === "") {
-            board[6] = "O";
-            squares[6].className = "o-animation";
+          else if (round >= 6) {
+            preventWin();
+            win = getWinner();
+            render();
           }
-          else if (randomCorner === 8 && board[0] === "") {
-            board[0] = "O";
-            squares[0].className = "o-animation";
-          }
-          else if (randomCorner === 6 && board[2] === "") {
-            board[2] = "O";
-            squares[2].className = "o-animation";
           }
         }
-        round++;
-      }
       
       render();
     }
   }
-}
-
 function getWinner() {
   let winner = null;
 
@@ -184,6 +184,7 @@ function easy(e) {
   gamemode = "easy";
   round = 0;
   flag1 = true;
+  hardText.className = "more-hidden";
   init();
 
 }
@@ -194,9 +195,185 @@ function hard(e) {
   gamemode = "hard";
   flag1 = true;
   init();
+  hardText.className = "";
+
 }
 
 function reset() {
   round++;
+}
+function preventWin() {
+  let didSomething = false;
+  for (let i = 0; i < 9; i++) {
+    if (board[i] === "") {
+      board[i] = "X";
+      squares[i].className = "hidden";
+      possibleWinner = getWinner();
+      if (possibleWinner == "X") {
+        squares[i].className = "o-animation";
+        board[i] = "O";
+        didSomething = true;
+        round++;
+        break;
+      } 
+      else {
+        board[i] = "";
+        squares[i].className = "square";
+      }
+}
+}
+if (didSomething === false && (board[0] === "" || board[2] === "" || board[6] === "" || board[8] === "") && round === 2) {
+
+  didSomething = false;
+  let valid = false;
+  let randomCorner1 = null;
+
+  if ((board[0] === "X" && board[8] === "X") || (board[2] === "X" && board[6] === "X")) {
+    while (valid === false) {
+    randomMiddleSide = Math.floor(Math.random() * Math.floor(5))
+    switch (randomMiddleSide) {
+    case 1:
+      randomMiddleSide = 1;
+      if (board[randomMiddleSide] === "") {
+        valid = true;
+        didSomething = true;
+      }
+      
+      break;
+    case 2:
+      randomMiddleSide = 3;
+      if (board[randomMiddleSide] === "") {
+        valid = true;
+        didSomething = true;
+      }
+     
+      break;
+    case 3:
+      randomMiddleSide = 5;
+      if (board[randomMiddleSide] === "") {
+        valid = true;
+        didSomething = true;
+      }
+     
+      break;
+    case 4:
+      randomMiddleSide = 7;
+      if (board[randomMiddleSide] === "") {
+        valid = true;
+        didSomething = true;
+      }
+      
+      break;
+  }
+  }
+  board[randomMiddleSide] = "O";
+  squares[randomMiddleSide].className = "o-animation";
+  }
+  //go in a corner
+  else {
+    while (randomCorner1 === null || valid === false) {
+    randomCorner1 = Math.floor(Math.random() * Math.floor(5))
+    switch (randomCorner1) {
+      case 1:
+        randomCorner1 = 0;
+        if (board[randomCorner1] === "") {
+        valid = true;
+        didSomething = true;
+        round++;
+      }
+        break;
+      case 2:
+        randomCorner1 = 2;
+        if (board[randomCorner1] === "") {
+        valid = true;
+        didSomething = true;
+        round++;
+      }
+        break;
+      case 3:
+        randomCorner1 = 6;
+        if (board[randomCorner1] === "") {
+        valid = true;
+        didSomething = true; 
+        round++;
+      }
+        break;
+      case 4:
+      randomCorner1 = 8;
+      if (board[randomCorner1] === "") {
+        valid = true;
+        didSomething = true;
+        round++;
+      }
+      break;
+    }
+  }
+  board[randomCorner1] = "O";
+  squares[randomCorner1].className = "o-animation";
+  }
+
+  }
+
+  else if (didSomething === false) {
+    didSomething = false;
+    valid = false;
+    while (valid === false) {
+    randomMiddleSide = Math.floor(Math.random() * Math.floor(5))
+    switch (randomMiddleSide) {
+    case 1:
+      randomMiddleSide = 1;
+      if (board[randomMiddleSide] === "") {
+        valid = true;
+        didSomething = true;
+        round++;
+      }
+      
+      break;
+    case 2:
+      randomMiddleSide = 3;
+      if (board[randomMiddleSide] === "") {
+        valid = true;
+        didSomething = true;
+        round++;
+      }
+      
+      break;
+    case 3:
+      randomMiddleSide = 5;
+      if (board[randomMiddleSide] === "") {
+        valid = true;
+        didSomething = true;
+        round++;
+      }
+      
+      break;
+    case 4:
+      randomMiddleSide = 7;
+      if (board[randomMiddleSide] === "") {
+        valid = true;
+        didSomething = true;
+        round++;
+      }
+      
+      break;
+  }
+  }
+  
+  board[randomMiddleSide] = "O";
+  squares[randomMiddleSide].className = "o-animation";
+  } 
+
+  else if (didSomething === false) {
+    didSomething = false;
+    while (flag === false) {
+      randomNum = Math.floor(Math.random() * Math.floor(max));
+      if (board[randomNum] === "") {
+      board[randomNum] = "O";
+      squares[randomNum].className = "o-animation";
+      flag = true;
+      round++;
+    }
+  }
+}
 }
 
