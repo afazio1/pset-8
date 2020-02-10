@@ -6,7 +6,6 @@ body {
   text-align: center;
   font-family: "Roboto", monospace;
 }
-
 h1 {
   margin: 0 auto;
   font-family: "Major Mono Display", monospace;
@@ -14,7 +13,6 @@ h1 {
   margin: 2%;
   color: #FFC300;
 }
-
 h2 {
   font-size: 36px;
   font-weight: lighter;
@@ -154,6 +152,7 @@ span {
   background-color: #C70039;
 
 }
+/* for testing winning conditions and preventing wins */
 .hidden {
   border: 1px solid rgba(0, 0, 0, 0.75);
   font-size: 0px;
