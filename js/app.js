@@ -152,7 +152,6 @@ function takeTurn(e) {
           }
           }
         }
-      
       render();
     }
   }
