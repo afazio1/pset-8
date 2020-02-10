@@ -93,6 +93,7 @@ h3 {
   animation-name: o;
   animation-duration: 0.5s;
 }
+/* very cool and spicy animations */
 @keyframes x {
   0%  {font-size: 0px;}
   75% {font-size: 100px;}
