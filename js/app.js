@@ -90,6 +90,7 @@ function takeTurn(e) {
       go++;
       win = getWinner();
       render();
+
       if (gamemode === "easy" && go !== 5 && win === null) {
         max = 9;
         let flag = false;
@@ -105,10 +106,7 @@ function takeTurn(e) {
       render();  
     }
       else if (gamemode === "hard" && go !== 5 && win === null) {
-        //develop algorithm
-        console.log("hard");
         let flag = false;
-        console.log(round);
         //if the player hasn't gone in a corner, go in a corner
         if ((index != 0 && index != 2 && index != 6 && index != 8) && round === 2){
           
@@ -137,7 +135,6 @@ function takeTurn(e) {
         }
         //if the player goes in a corner, then go in the middle
         else if ((index === 0 || index === 2 || index === 6 || index === 8) && round === 2) {
-          console.log(round);
           board[4] = "O";
           squares[4].className = "o-animation";
           round++;
