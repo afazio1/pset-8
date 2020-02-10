@@ -141,8 +141,6 @@ function takeTurn(e) {
           preventWin();
           getWinner();
           render();
-        
-            //if player did not place 2nd X in a winning position, then go to a side middle spot
             
           }
           else if (round >= 6) {
