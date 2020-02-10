@@ -54,8 +54,6 @@ function init(e) {
   if (gamemode !== "hard") {
     gamemode = "easy";
   }
-  
-
   //resets the animation
   
   if (round > 0 || flag1 === true) {
@@ -63,14 +61,12 @@ function init(e) {
       squares[i].className = "square";
     }
   }
-
   render(); 
 }
 
 function render() {
   board.forEach(function(mark, index) {
     squares[index].textContent = mark;    // writes an X or an O on board
-
   });
 
   message.textContent =
@@ -352,7 +348,6 @@ if (didSomething === false && (board[0] === "" || board[2] === "" || board[6] ==
         didSomething = true;
         round++;
       }
-      
       break;
   }
   }
